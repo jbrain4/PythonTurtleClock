@@ -10,6 +10,8 @@ class PythonTurtleClock():
 		self.minutePen = turtle.Turtle()
 		self.secondPen = turtle.Turtle()
 
+		self.style = ''
+
 		# Hide all the pens
 		self.clockPen.hideturtle()
 		self.hourPen.hideturtle()
@@ -48,6 +50,8 @@ class PythonTurtleClock():
 		self.secondPen.right(int(sec) * 6)
 		self.secondPen.forward(225)
 		self.secondPen.backward(225)
+
+	# Functions for drawing dots
 	def hourDots(self):
 		for i in range(0, 12):
 			self.clockPen.forward(300)
@@ -81,6 +85,43 @@ class PythonTurtleClock():
 			self.clockPen.right(30)
 			currentNumeral += 1
 		self.clockPen.home()
+
+	# 12, 3, 6, 9 only
+	def lessHourDots(self):
+		for i in range(0, 12):
+			self.clockPen.forward(300)
+			self.clockPen.dot(20)
+			self.clockPen.backward(300)
+			self.clockPen.right(90)
+	def lessHourNumbers(self):
+		self.clockPen.setheading(270)
+		self.clockPen.forward(25)
+		self.clockPen.setheading(90)
+		self.clockPen.right(90)
+		currentNumber = 3
+		for i in range(0, 4):
+			self.clockPen.forward(300)
+			self.clockPen.write(currentNumber, align='center', font=('Avenir Next', 36, 'normal'))
+			self.clockPen.backward(300)
+			self.clockPen.right(90)
+			currentNumber += 3
+		self.clockPen.home()
+	def lessHourNumerals(self):
+		self.clockPen.setheading(270)
+		self.clockPen.forward(20)
+		self.clockPen.setheading(90)
+		self.clockPen.right(90)
+		currentNumeral = 0
+		numerals = ['III', 'VI', 'IX', 'XII']
+		for i in range(0, 4):
+			self.clockPen.forward(300)
+			self.clockPen.write(numerals[currentNumeral], align='center', font=('Times New Roman', 36, 'normal'))
+			self.clockPen.backward(300)
+			self.clockPen.right(90)
+			currentNumeral += 1
+		self.clockPen.home()
+
+
 	def minuteDots(self, size):
 		# Draw the minute/second dots
 		self.clockPen.right(6) # Skip over the 12 o'clock dot
@@ -99,15 +140,38 @@ class PythonTurtleClock():
 			# Face north
 			self.clockPen.setheading(90)
 
-			# Draw the hour dots
-			#hourNumerals()
-			#hourNumbers()
-			self.hourDots()
+			# Draw the the dots
+			if self.style == 'simple':
+				self.hourDots()
+				self.minuteDots(10)
+			elif self.style == 'minimal':
+				self.lessHourDots()
+			elif self.style == 'clean':
+				self.hourDots()
+			elif self.style == 'modern':
+				self.hourNumbers()
+				self.clockPen.left(90)
+				self.minuteDots(10)
+			elif self.style == 'minimal-modern':
+				self.lessHourNumbers()
+			elif self.style == 'clean-modern':
+				self.hourNumbers()
+			elif self.style == 'classic':
+				self.hourNumerals()
+				self.clockPen.left(90)
+				self.minuteDots(5)
+			elif self.style == 'minimal-classic':
+				self.lessHourNumerals()
+			elif self.style == 'clean-classic':
+				self.hourNumerals()
+			else:
+				print('No style called "%s"' % self.style)
+				print('Defaulting to "simple"')
+				self.hourDots()
+				self.minuteDots(10)
 
 			# Face north
 			self.clockPen.setheading(90)
-
-			self.minuteDots(10)
 
 			# Store the current time
 			currentTime = datetime.datetime.now()
