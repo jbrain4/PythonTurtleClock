@@ -136,11 +136,10 @@ class PythonTurtleClock():
 	def mainloop(self):
 		try:
 			time.sleep(1)
-			# Draw the dots
 			# Face north
 			self.clockPen.setheading(90)
 
-			# Draw the the dots
+			# Draw the  dots
 			if self.style == 'simple':
 				self.hourDots()
 				self.minuteDots(10)
