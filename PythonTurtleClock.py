@@ -155,6 +155,7 @@ class PythonTurtleClock():
 			if self.style == 'simple':
 				self.drawHourDots(self.hourDotColor)
 				self.(10, self.minuteSecondDotColor)
+				self.minuteDots(10, self.minuteSecondDotColor)
 			elif self.style == 'minimal':
 				self.drawHourDots(self.hourDotColor, True)
 			elif self.style == 'clean':
