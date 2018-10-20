@@ -10,7 +10,19 @@ class PythonTurtleClock():
 		self.minutePen = turtle.Turtle()
 		self.secondPen = turtle.Turtle()
 
-		self.style = ''
+		# Defing Customization Variables (default values)
+		self.style = 'simple'
+		self.hourHandColor = 'black'
+		self.minuteHandColor = 'black'
+		self.secondHandColor = 'red'
+		self.hourDotColor = 'black'
+		self.minuteSecondDotColor = 'black'
+		self.hourHandThickness = 15
+		self.minuteHandThickness = 10
+		self.secondHandThickness = 5
+		self.hourHandLength = 175
+		self.minuteHandLength = 225
+		self.secondHandLength = 225
 
 		# Hide all the pens
 		self.clockPen.hideturtle()
@@ -20,11 +32,7 @@ class PythonTurtleClock():
 
 		# Configure each pen
 		self.clockPen.penup() # Disable drawing for clockPen
-		self.hourPen.pensize(15) # Make the hour hand thick
-		self.minutePen.pensize(10) # Make the minute hand medium
-		self.secondPen.pensize(5) # Make the second hand thin
-		self.secondPen.color('red') # Make the second hand red
-
+		
 		# Disable pen animation
 		self.clockPen.speed(0)
 		self.hourPen.speed(0)
@@ -33,32 +41,40 @@ class PythonTurtleClock():
 
 	# Define the drawing functions
 	def drawHourHand(self, hour, min):
+		self.hourPen.pensize(self.hourHandThickness) # Make the hour hand thick
+		self.hourPen.color(self.hourHandColor) # Color the hour hand
 		self.hourPen.clear()
 		self.hourPen.setheading(90)
 		self.hourPen.right((int(hour) * 30) + (int(min)/2))
-		self.hourPen.forward(175)
-		self.hourPen.backward(175)
+		self.hourPen.forward(self.hourHandLength)
+		self.hourPen.backward(self.hourHandLength)
 	def drawMinuteHand(self, min):
+		self.minutePen.pensize(self.minuteHandThickness) # Make the minute hand medium
+		self.minutePen.color(self.minuteHandColor) # Color the minute hand
 		self.minutePen.clear()
 		self.minutePen.setheading(90)
 		self.minutePen.right(int(min) * 6)
-		self.minutePen.forward(225)
-		self.minutePen.backward(225)
+		self.minutePen.forward(self.minuteHandLength)
+		self.minutePen.backward(self.minuteHandLength)
 	def drawSecondHand(self, sec):
+		self.secondPen.pensize(self.secondHandThickness) # Make the second hand thin
+		self.secondPen.color(self.secondHandColor) # Color the second hand
 		self.secondPen.clear()
 		self.secondPen.setheading(90)
 		self.secondPen.right(int(sec) * 6)
-		self.secondPen.forward(225)
-		self.secondPen.backward(225)
+		self.secondPen.forward(self.secondHandLength)
+		self.secondPen.backward(self.secondHandLength)
 
 	# Functions for drawing dots
 	def hourDots(self):
+		self.clockPen.color(self.hourDotColor)
 		for i in range(0, 12):
 			self.clockPen.forward(300)
 			self.clockPen.dot(20)
 			self.clockPen.backward(300)
 			self.clockPen.right(30)
 	def hourNumbers(self):
+		self.clockPen.color(self.hourDotColor)
 		self.clockPen.setheading(270)
 		self.clockPen.forward(25)
 		self.clockPen.setheading(90)
@@ -72,6 +88,7 @@ class PythonTurtleClock():
 			currentNumber += 1
 		self.clockPen.home()
 	def hourNumerals(self):
+		self.clockPen.color(self.hourDotColor)
 		self.clockPen.setheading(270)
 		self.clockPen.forward(20)
 		self.clockPen.setheading(90)
@@ -88,12 +105,14 @@ class PythonTurtleClock():
 
 	# 12, 3, 6, 9 only
 	def lessHourDots(self):
+		self.clockPen.color(self.hourDotColor)
 		for i in range(0, 12):
 			self.clockPen.forward(300)
 			self.clockPen.dot(20)
 			self.clockPen.backward(300)
 			self.clockPen.right(90)
 	def lessHourNumbers(self):
+		self.clockPen.color(self.hourDotColor)
 		self.clockPen.setheading(270)
 		self.clockPen.forward(25)
 		self.clockPen.setheading(90)
@@ -107,6 +126,7 @@ class PythonTurtleClock():
 			currentNumber += 3
 		self.clockPen.home()
 	def lessHourNumerals(self):
+		self.clockPen.color(self.hourDotColor)
 		self.clockPen.setheading(270)
 		self.clockPen.forward(20)
 		self.clockPen.setheading(90)
@@ -124,6 +144,7 @@ class PythonTurtleClock():
 
 	def minuteDots(self, size):
 		# Draw the minute/second dots
+		self.clockPen.color(self.minuteSecondDotColor)
 		self.clockPen.right(6) # Skip over the 12 o'clock dot
 		for i in range(0, 12):
 			for i in range(0, 4):
