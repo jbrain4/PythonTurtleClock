@@ -65,9 +65,9 @@ class PythonTurtleClock():
 		self.secondPen.forward(length)
 		self.secondPen.backward(length)
 
-	# Functions for drawing dots
-	def drawHourDots(self, less = False):
-		self.clockPen.color(self.hourDotColor)
+	# The method below is used to draw the 
+	def drawHourDots(self, color, less = False):
+		self.clockPen.color(color)
 		if not less:
 			for i in range(0, 12):
 				self.clockPen.forward(300)
@@ -80,8 +80,8 @@ class PythonTurtleClock():
 				self.clockPen.dot(20)
 				self.clockPen.backward(300)
 				self.clockPen.right(90)
-	def drawHourNumbers(self, less = False):
-		self.clockPen.color(self.hourDotColor)
+	def drawHourNumbers(self, color, less = False):
+		self.clockPen.color(color)
 		self.clockPen.setheading(270)
 		self.clockPen.forward(25)
 		self.clockPen.setheading(90)
@@ -90,7 +90,8 @@ class PythonTurtleClock():
 			currentNumber = 1
 			for i in range(0, 12):
 				self.clockPen.forward(300)
-				self.clockPen.write(currentNumber, align='center', font=('Avenir Next', 36, 'normal'))
+				self.clockPen.write(currentNumber, align='center',
+									font=('Avenir Next', 36, 'normal'))
 				self.clockPen.backward(300)
 				self.clockPen.right(30)
 				currentNumber += 1
@@ -99,23 +100,27 @@ class PythonTurtleClock():
 			currentNumber = 3
 			for i in range(0, 4):
 				self.clockPen.forward(300)
-				self.clockPen.write(currentNumber, align='center', font=('Avenir Next', 36, 'normal'))
+				self.clockPen.write(currentNumber, align='center',
+									font=('Avenir Next', 36, 'normal'))
 				self.clockPen.backward(300)
 				self.clockPen.right(90)
 				currentNumber += 3
 		self.clockPen.home()
-	def drawHourNumerals(self, less = False):
-		self.clockPen.color(self.hourDotColor)
+	def drawHourNumerals(self, color, less = False):
+		self.clockPen.color(color)
 		self.clockPen.setheading(270)
 		self.clockPen.forward(20)
 		self.clockPen.setheading(90)
 		currentNumeral = 0
 		if not less:
 			self.clockPen.right(30)
-			numerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
+			numerals = ['I', 'II', 'III', 'IV',
+						'V', 'VI', 'VII', 'VIII',
+						'IX', 'X', 'XI', 'XII']
 			for i in range(0, 12):
 				self.clockPen.forward(300)
-				self.clockPen.write(numerals[currentNumeral], align='center', font=('Times New Roman', 36, 'normal'))
+				self.clockPen.write(numerals[currentNumeral], align='center',
+									font=('Times New Roman', 36, 'normal'))
 				self.clockPen.backward(300)
 				self.clockPen.right(30)
 				currentNumeral += 1
@@ -124,16 +129,16 @@ class PythonTurtleClock():
 			numerals = ['III', 'VI', 'IX', 'XII']
 			for i in range(0, 4):
 				self.clockPen.forward(300)
-				self.clockPen.write(numerals[currentNumeral], align='center', font=('Times New Roman', 36, 'normal'))
+				self.clockPen.write(numerals[currentNumeral], align='center',
+									font=('Times New Roman', 36, 'normal'))
 				self.clockPen.backward(300)
 				self.clockPen.right(90)
 				currentNumeral += 1
 		self.clockPen.home()
 
 	def minuteDots(self, size, color):
-		# Draw the minute/second dots
 		self.clockPen.color(color)
-		self.clockPen.right(6) # Skip over the 12 o'clock dot
+		self.clockPen.right(6)
 		for i in range(0, 12):
 			for i in range(0, 4):
 				self.clockPen.forward(300)
@@ -145,64 +150,62 @@ class PythonTurtleClock():
 	def mainloop(self):
 		try:
 			time.sleep(1)
-			# Face north
 			self.clockPen.setheading(90)
 
-			# Draw the  dots
 			if self.style == 'simple':
-				self.drawHourDots()
+				self.drawHourDots(self.hourDotColor)
 				self.(10, self.minuteSecondDotColor)
 			elif self.style == 'minimal':
-				self.drawHourDots(True)
+				self.drawHourDots(self.hourDotColor, True)
 			elif self.style == 'clean':
-				self.drawHourDots()
+				self.drawHourDots(self.hourDotColor)
 			elif self.style == 'modern':
-				self.drawHourNumbers()
+				self.drawHourNumbers(self.hourDotColor)
 				self.clockPen.left(90)
 				self.minuteDots(10, self.minuteSecondDotColor)
 			elif self.style == 'minimal-modern':
-				self.drawHourNumbers(True)
+				self.drawHourNumbers(self.hourDotColor, True)
 			elif self.style == 'clean-modern':
-				self.drawHourNumbers()
+				self.drawHourNumbers(self.hourDotColor)
 			elif self.style == 'classic':
-				self.drawHourNumerals()
+				self.drawHourNumerals(self.hourDotColor)
 				self.clockPen.left(90)
 				self.minuteDots(5, self.minuteSecondDotColor)
 			elif self.style == 'minimal-classic':
-				self.drawHourNumerals(True)
+				self.drawHourNumerals(self.hourDotColor, True)
 			elif self.style == 'clean-classic':
-				self.drawHourNumerals()
+				self.drawHourNumerals(self.hourDotColor)
 			else:
 				print('No style called "%s"' % self.style)
 				print('Defaulting to "simple"')
-				self.drawHourDots()
+				self.drawHourDots(self.hourDotColor)
 				self.minuteDots(10, self.minuteSecondDotColor)
 
-			# Face north
 			self.clockPen.setheading(90)
 
-			# Store the current time
 			currentTime = datetime.datetime.now()
 			currentHour = currentTime.hour
 			currentMinute = currentTime.minute
 			currentSecond = currentTime.second
 
-			self.drawHourHand(currentHour, currentMinute, self.hourHandColor, self.hourHandThickness, self.hourHandLength) # Draw the initial hour hand
-			self.drawMinuteHand(currentMinute, self.minuteHandColor, self.minuteHandThickness, self.minuteHandLength) # Draw the initial minute hand
-			self.drawSecondHand(currentSecond, self.secondHandColor, self.secondHandThickness, self.secondHandLength) # Draw the initial second hand
+			self.drawHourHand(currentHour, currentMinute, self.hourHandColor,
+							  self.hourHandThickness, self.hourHandLength)
+			self.drawMinuteHand(currentMinute, self.minuteHandColor,
+								self.minuteHandThickness, self.minuteHandLength)
+			self.drawSecondHand(currentSecond, self.secondHandColor,
+								self.secondHandThickness, self.secondHandLength)
 
-			# Update the clock
 			while True:
 				time.sleep(1)
 
-				# Check and update the time after 2 minutes
 				currentTime = datetime.datetime.now()
 				currentHour = currentTime.hour
 				currentMinute = currentTime.minute
 				currentSecond = currentTime.second
 
-				# Update and draw the hour and minute hands
-				self.drawSecondHand(currentSecond, self.secondHandColor, self.secondHandThickness, self.secondHandLength)
+				self.drawSecondHand(currentSecond, self.secondHandColor,
+									self.secondHandThickness,
+									self.secondHandLength)
 
 				if currentSecond == 0:
 					self.minutePen.clear()
@@ -211,11 +214,14 @@ class PythonTurtleClock():
 					else:
 						currentMinute += 1
 
-					# Draw the hands
-					self.drawMinuteHand(currentMinute, self.minuteHandColor, self.minuteHandThickness, self.minuteHandLength)
-					self.drawHourHand(currentHour, currentMinute, self.hourHandColor, self.hourHandThickness,self.hourHandLength)
+					self.drawMinuteHand(currentMinute, self.minuteHandColor,
+										self.minuteHandThickness,
+										self.minuteHandLength)
+					self.drawHourHand(currentHour, currentMinute,
+									  self.hourHandColor,
+									  self.hourHandThickness,
+									  self.hourHandLength)
 
-					# Update the hour if the minute hand is at minute 0
 					if currentMinute == 0:
 						if currentHour == 24:
 							currentHour = 1
