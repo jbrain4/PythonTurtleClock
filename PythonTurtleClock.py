@@ -149,7 +149,6 @@ class PythonTurtleClock():
 
 	def mainloop(self):
 		try:
-			time.sleep(1)
 			self.clockPen.setheading(90)
 
 			if self.style == 'simple':
